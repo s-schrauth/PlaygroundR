@@ -1,0 +1,241 @@
+---
+title: "Palettes"
+author: "Simon"
+format: html
+---
+
+```{r}
+#| eval: false
+#| include: false
+
+renv::restore()
+```
+
+::: {.panel-tabset}
+## Base
+```{r}
+#| results: hide
+pacman::p_load(tidyverse)
+```
+
+```{r}
+set.seed(3148743)
+x = c(1:10)
+y = round(runif(10, 8, 14), 0)
+
+basic_data = data.frame(x = x,
+                        y = y)
+
+basic_plot_disc = basic_data %>% 
+  ggplot(aes(x = factor(x), y = y, fill = factor(x))) +
+  geom_col() +
+  labs(title = "Basic Discrete Bar Plot",
+       subtitle = "with base package",
+       x = "x",
+       fill = "Color")
+
+basic_plot_cont = basic_data %>% 
+  ggplot(aes(x = x, y = y, fill = x)) +
+  geom_col() +
+  labs(title = "Basic Continous Bar Plot",
+       subtitle = "with base package",
+       x = "x",
+       fill = "Color")
+
+basic_plot_disc
+basic_plot_cont
+```
+
+
+
+## ggplot
+```{r}
+#| warning: false
+basic_plot_disc +
+  scale_fill_brewer(type = "qual",
+                    palette = 2) +
+  labs(subtitle = "with ggplot package (brewer)")
+
+basic_plot_disc +
+  scale_fill_brewer(type = "div",
+                    palette = 1) +
+  labs(subtitle = "with ggplot package (brewer)")
+
+basic_plot_disc +
+  scale_fill_brewer(type = "div",
+                    palette = 3) +
+  labs(subtitle = "with ggplot package (brewer)")
+
+basic_plot_disc +
+  scale_fill_brewer(type = "div",
+                    palette = 5) +
+  labs(subtitle = "with ggplot package (brewer)")
+
+basic_plot_disc +
+  scale_fill_brewer(type = "div",
+                    palette = 8) +
+  labs(subtitle = "with ggplot package (brewer)")
+
+basic_plot_disc +
+  scale_fill_brewer(type = "div",
+                    palette = 9) +
+  labs(subtitle = "with ggplot package (brewer)")
+```
+
+## wesanderson
+```{r}
+#| results: hide
+pacman::p_load(wesanderson)
+```
+
+```{r}
+basic_plot_disc +
+  scale_fill_manual(values = rep(wes_palette("Zissou1"),3)) +
+  labs(subtitle = "with wesanderson package (Palette: Zissou1)")
+```
+
+```{r}
+basic_plot_cont +
+  scale_fill_gradientn(colours = wes_palette("Zissou1", 10, type = "continuous")) +
+  labs(subtitle = "with wesanderson package (Palette: Zissou1)")
+```
+
+```{r}
+basic_plot_disc +
+  scale_fill_manual(values = rep(wes_palette("Darjeeling1"),3)) +
+  labs(subtitle = "with wesanderson package (Palette: Darjeeling1)")
+```
+
+```{r}
+basic_plot_disc +
+  scale_fill_manual(values = rep(wes_palette("Chevalier1"),3)) +
+  labs(subtitle = "with wesanderson package (Palette: Chevalier1)")
+```
+
+```{r}
+basic_plot_disc +
+  scale_fill_manual(values = rep(wes_palette("Cavalcanti1"),3)) +
+  labs(subtitle = "with wesanderson package (Palette: Cavalcanti1)")
+```
+
+```{r}
+basic_plot_cont +
+  scale_fill_gradientn(colours = wes_palette("Cavalcanti1", 10, type = "continuous")) +
+  labs(subtitle = "with wesanderson package (Palette: Cavalcanti1)")
+```
+
+```{r}
+basic_plot_cont +
+  scale_fill_gradientn(colours = wes_palette("GrandBudapest1", 10, type = "continuous")) +
+  labs(subtitle = "with wesanderson package (Palette: GrandBudapest1)")
+```
+
+```{r}
+basic_plot_cont +
+  scale_fill_gradientn(colours = wes_palette("GrandBudapest2", 10, type = "continuous")) +
+  labs(subtitle = "with wesanderson package (Palette: GrandBudapest2)")
+```
+
+## PridePalettes
+```{r}
+pacman::p_load_gh("joelleforestier/PridePalettes")
+```
+
+```{r}
+basic_plot_disc +
+  scale_fill_manual(values = rep(pride_palette("pride"),3)) +
+  labs(subtitle = "with PridePalettes package (Palette: pride)")
+```
+
+```{r}
+basic_plot_cont +
+  scale_fill_gradientn(colours = pride_palette("pride")) +
+  labs(subtitle = "with PridePalettes package (Palette: pride)")
+```
+
+```{r}
+basic_plot_disc +
+  scale_fill_manual(values = rep(pride_palette("trans_pride"),4)) +
+  labs(subtitle = "with PridePalettes package (Palette: trans_pride)")
+```
+
+## tvthemes
+```{r}
+pacman::p_load(tvthemes, gapminder, cowplot, extrafont)
+loadfonts(quiet = TRUE)
+#font_import()
+```
+
+```{r}
+ggplot(mpg, aes(displ)) +
+  geom_histogram(aes(fill = class), col = "black", linewidth = 0.1) +
+  scale_fill_avatar(palette = "FireNation") +
+  labs(title = "Flameo, Hotman!",
+       subtitle = "Fire. Wang Fire. This is my wife, Sapphire.",
+       x = "Lion Vultures Owned",
+       y = "Agni Kai Participation") +
+  theme_avatar(title.font = "Slayer",
+               text.font = "Slayer") -> firenation
+
+airquality %>% 
+  mutate(Month = as.factor(Month)) %>% 
+  ggplot(aes(x = Day, y = Temp, group = Month, color = Month)) +
+  geom_line(size = 1.5) +
+  scale_color_avatar(palette = "AirNomads") +
+  labs(title = "Let's head to the Eastern Air Temple!",
+       subtitle = "Appa, Yip Yip!") +
+  theme_avatar(title.font = "Slayer",
+               text.font = "Slayer",
+               title.size = 10) -> airnomads
+
+ggplot(gapminder::gapminder,
+       aes(x = log10(gdpPercap), y = lifeExp)) +
+  geom_point(aes(color = continent)) + 
+  scale_x_log10() +
+  scale_color_avatar(palette = "WaterTribe") +
+  labs(title = "I am thinking maybe we could... do an activity together?",
+       subtitle = "... Do an activity?",
+       x = "GDP per Otter-Penguins",
+       y = "Life Expectancy of Arctic Camels") +
+  theme_avatar(title.font = "Slayer",
+               text.font = "Slayer",
+               title.size = 8,
+               subtitle.size = 8) -> watertribe
+
+ggplot(mpg, aes(displ)) +
+  geom_histogram(aes(fill = class), col = "black", size = 0.1) +
+  scale_fill_avatar(palette = "EarthKingdom") +
+  labs(title = "There is no war in Ba Sing Se",
+       subtitle = "(Welcome to Lake Laogai)") +
+  theme_avatar(title.font = "Slayer",
+               text.font = "Slayer",
+               title.size = 14) -> earthkingdom
+
+## plot together:
+plot_grid(firenation, airnomads, watertribe, earthkingdom, ncol = 2)
+```
+```{r}
+basic_plot_disc +
+  scale_fill_avatar(palette = "FireNation") +
+  labs(subtitle = "with tvthemes package (Palette: FireNation)")
+```
+
+```{r}
+basic_plot_disc +
+  scale_fill_avatar(palette = "EarthKingdom") +
+  labs(subtitle = "with tvthemes package (Palette: EarthKingdom)")
+```
+
+```{r}
+basic_plot_disc +
+  scale_fill_avatar(palette = "WaterTribe") +
+  labs(subtitle = "with tvthemes package (Palette: WaterTribe)")
+```
+
+```{r}
+basic_plot_disc +
+  scale_fill_avatar(palette = "AirNomads") +
+  labs(subtitle = "with tvthemes package (Palette: AirNomads)")
+```
+
+:::
