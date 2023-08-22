@@ -11,8 +11,9 @@ format: html
 renv::restore()
 ```
 
-::: {.panel-tabset}
+::: panel-tabset
 ## Base
+
 ```{r}
 #| results: hide
 pacman::p_load(tidyverse)
@@ -46,9 +47,8 @@ basic_plot_disc
 basic_plot_cont
 ```
 
-
-
 ## ggplot
+
 ```{r}
 #| warning: false
 basic_plot_disc +
@@ -83,6 +83,7 @@ basic_plot_disc +
 ```
 
 ## wesanderson
+
 ```{r}
 #| results: hide
 pacman::p_load(wesanderson)
@@ -137,6 +138,7 @@ basic_plot_cont +
 ```
 
 ## PridePalettes
+
 ```{r}
 pacman::p_load_gh("joelleforestier/PridePalettes")
 ```
@@ -160,6 +162,7 @@ basic_plot_disc +
 ```
 
 ## tvthemes
+
 ```{r}
 pacman::p_load(tvthemes, gapminder, cowplot, extrafont)
 loadfonts(quiet = TRUE)
@@ -214,6 +217,7 @@ ggplot(mpg, aes(displ)) +
 ## plot together:
 plot_grid(firenation, airnomads, watertribe, earthkingdom, ncol = 2)
 ```
+
 ```{r}
 basic_plot_disc +
   scale_fill_avatar(palette = "FireNation") +
@@ -237,5 +241,4 @@ basic_plot_disc +
   scale_fill_avatar(palette = "AirNomads") +
   labs(subtitle = "with tvthemes package (Palette: AirNomads)")
 ```
-
 :::
